@@ -213,25 +213,7 @@ prec = 41/(26+41)
 
 
 
-# In[88]:
-
-
-#F1 - 2*(precision*recall/precision+recall)
-
-#2*((prec*recall)/(prec+recall))
-
-
-# - Discussion on when to use each:
-#     Recall: When calculated by hand, we get a recall value of 49%. This corresponds to the recall value we are seeing
-#             in the classification report. The best situation to use recall would be when we want to see of all the true events, how many did we correctly predict. Fraud is a good example of when we would want to use recall. Fraud is situation in which we would want to correctly predict cases of fraud in order to minimize the occurrances of fraud occurring
-#         
-#     Precision: Calculating by hand, we see a precision variable at 61%, which can be found in the classification report. 
-#         Precision is best used when we want to see the probability of the model accurately predicted our outcome variable. A good example of this would be in investing. When picking the correct stock to invest in, we want to make sure we are picking the stock our model has predicted correctly.
-#         
-#         
-#     F1: F1 was calculated by the model, and by hand at 55%. This measure shows the effectiveness of the model and the power of the model because it takes into account both recall and precision. When comparing between models, F1 serves as a good comparison factor, and taking the model with the highest F1 will be the most effective and accurate.
-
-# #### 10. Prediction
+#
 
 # In[22]:
 
@@ -396,4 +378,4 @@ if predicted_class3 == 0: predicted_value = "Non User"
 elif predicted_class3 == 1: predicted_value = "LinkedIn User"
 
 st.markdown(f"The probability of being a LinkedIn user: {prob3[0][1]}")
-st.markdown(f"{predicted_class3[0]} - {predicted_value}")
+st.markdown(f"Prediction: {predicted_class3[0]} - {predicted_value}")
