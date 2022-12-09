@@ -10,13 +10,11 @@ import altair as alt
 import streamlit as st
 
 
-
-
 # In[2]:
 
 
-s = pd.read_csv('/Users/pgs35/OneDrive/Documents/Georgetown MSBA/Class Work/Programming 2/Final Project/social_media_usage.csv')
-#s = pd.read_csc('/Users/pgs35/OneDrive/Documents/Final_Project/social_media_usage.csv')
+s = pd.read_csv('/Users/pgs35/OneDrive/Documents/Final_Project/social_media_usage.csv')
+
 
 # In[3]:
 
@@ -69,9 +67,6 @@ toy = pd.DataFrame(data, columns=['Name', 'Age'])
 # In[8]:
 
 
-
-
-
 # In[9]:
 
 
@@ -121,7 +116,7 @@ ss.head(50)
 
 # #### 4. Create Target Vector (y) and feature set (x)
 
-# In[14]:
+# In[15]:
 
 
 y = ss["sm_li"]
@@ -130,7 +125,7 @@ X = ss[["income", "education", "parent", "married", "female", "age"]]
 
 # #### imort the regression models
 
-# In[15]:
+# In[16]:
 
 
 from sklearn.linear_model import LogisticRegression
@@ -141,7 +136,7 @@ from sklearn.metrics import confusion_matrix
 
 # #### 5. Split data into training and test sets
 
-# In[16]:
+# In[17]:
 
 
 X_train, X_test, y_train, y_test = train_test_split(X,
@@ -151,17 +146,18 @@ X_train, X_test, y_train, y_test = train_test_split(X,
                                                    random_state = 987)
 
 
-# - explain: 
+# - Explain: In this section we are splitting our data up into a training section and a testing section. By having a training section, we allow our algorithim to learn the data. We then apply the model to the test set. We have held out 80% of the data
+#     to be used as our training data. The model will use the remaining 20% to predict.
 
 # #### 6. Initialize algorithm
 
-# In[17]:
+# In[18]:
 
 
 lr = LogisticRegression()
 
 
-# In[18]:
+# In[19]:
 
 
 lr.fit(X_train, y_train)
@@ -169,7 +165,7 @@ lr.fit(X_train, y_train)
 
 # #### 7. Evaluate Model
 
-# In[19]:
+# In[20]:
 
 
 y_pred = lr.predict(X_test)
@@ -177,7 +173,7 @@ y_pred = lr.predict(X_test)
 
 # #### 8. Confusion Matrix
 
-# In[20]:
+# In[21]:
 
 
 #Confustion Matrix - use to calc by hand
@@ -187,37 +183,16 @@ pd.DataFrame(confusion_matrix(y_test, y_pred),
             index = ["Actual negative", "Actual Positive"]).style.background_gradient(cmap = "PiYG")
 
 
-# In[21]:
-
-
-#print(classification_report(y_test, y_pred))
-
-
-# #### 9. Precision, Recall and F1
-# 
-
-# In[90]:
-
-
-#Recall: TP/(TP+FN)
-
-recall = 41/(41+42)
-
-
-
-
-# In[89]:
-
-
-#Precision: TP/(TP+FP)
-
-prec = 41/(26+41)
-
-
-
-#
-
 # In[22]:
+
+
+print(classification_report(y_test, y_pred))
+
+
+
+
+
+
 
 
 new_pred = pd.DataFrame({
@@ -230,31 +205,31 @@ new_pred = pd.DataFrame({
     })
 
 
-# In[23]:
+# In[27]:
 
 
 new_pred["prediction_linkedin"] = lr.predict(new_pred)
 
 
-# In[24]:
+# In[28]:
 
 
 
 
 
-# In[26]:
+# In[29]:
 
 
 user = [8, 7, 2, 1, 2, 42]
 
 
-# In[27]:
+# In[30]:
 
 
 predicted_class = lr.predict([user])
 
 
-# In[28]:
+# In[31]:
 
 
 prob = lr.predict_proba([user])
@@ -263,28 +238,37 @@ prob = lr.predict_proba([user])
 # In[29]:
 
 
-
-
-
-# In[30]:
-
-
-user2 = [8, 7, 2, 1, 2, 82]
-
-
-# In[31]:
-
-
-predicted_class2 = lr.predict([user2])
+print(prob[0][1])
 
 
 # In[32]:
 
 
-prob2 = lr.predict_proba([user2])
+user2 = [8, 7, 2, 1, 2, 82]
 
 
 # In[33]:
+
+
+predicted_class2 = lr.predict([user2])
+
+
+# In[34]:
+
+
+prob2 = lr.predict_proba([user2])
+
+
+# In[35]:
+
+
+print(prob2[0][1])
+
+
+# - When changing the age of the predicted user, while holding all other variables constant, we see the probability of 
+#     a person being a LinkedIn user drop to 31% from 59%
+
+
 st.image('images.png')
 st.markdown("# LinkedIn User Prediction Application")
 user2 = [8, 7, 2, 1, 2, 82]
@@ -379,5 +363,7 @@ prob3 = lr.predict_proba([user3])
 if predicted_class3 == 0: predicted_value = "Non User"
 elif predicted_class3 == 1: predicted_value = "LinkedIn User"
 
-st.markdown(f"The probability of being a LinkedIn user: {prob3[0][1]}")
-st.markdown(f"Prediction: {predicted_class3[0]} - {predicted_value}")
+button_click = st.button("Click here to find the probability that you are a LinkedIn User")
+
+if button_click == True: st.markdown(f"The probability of being a LinkedIn user: {prob3[0][1]}")
+if button_click == True: st.markdown(f"Prediction: {predicted_class3[0]} - {predicted_value}")
