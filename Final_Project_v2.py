@@ -365,5 +365,5 @@ elif predicted_class3 == 1: predicted_value = "LinkedIn User"
 
 button_click = st.button("Click here to find the probability that you are a LinkedIn User")
 
-if button_click == True: st.markdown(f"The probability of being a LinkedIn user: {prob3[0][1]}")
+if button_click == True: st.markdown(f"The probability of being a LinkedIn user: {round(prob3[0][1]*100,1)}")
 if button_click == True: st.markdown(f"Prediction: {predicted_class3[0]} - {predicted_value}")
