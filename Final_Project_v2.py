@@ -13,7 +13,7 @@ import streamlit as st
 # In[2]:
 
 
-s = pd.read_csv('C:/Users/pgs35/OneDrive/Documents/Final_Project/social_media_usage.csv')
+s = pd.read_csv('./social_media_usage.csv')
 
 
 # In[3]:
